@@ -7,10 +7,13 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "build:functions": "netlify-lambda build ./functions"
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "cross-env": "^5.2.0",
+    "dotenv": "^8.1.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
@@ -30,6 +33,7 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "netlify-lambda": "^1.1.1"
   }
 }
