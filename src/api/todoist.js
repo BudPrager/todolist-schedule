@@ -1,20 +1,27 @@
-const apiURL = 'https://api.todoist.com/sync/v8/sync';
+const apiUrl = 'https://api.todoist.com/rest/v1/tasks';
 
 export default {
   getItems(next) {
-    let apiKey = '<null>';
+    // Get the api key from the netlify environment variable
     fetch('/.netlify/functions/todoist-api-key')
       .then(response => response.json())
-      .then((data) => { apiKey = data.key; });
+      .then((data) => {
+        const auth = `Bearer ${data.key}`;
 
-    const params = {
-      token: apiKey,
-      sync_token: '*',
-      resource_types: '["items"]',
-      method: 'POST',
-    };
+        // When we have the auth, build the headers
+        const requestParams = {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'text/plain',
+            Authorization: auth,
+          },
+        };
 
-    fetch(apiURL, params)
-      .then((data) => { next(data); });
+        // Get the request and return an object from the json
+        fetch(apiUrl, requestParams)
+          .then(res => res.json())
+          .then((items) => { console.log(items); next(items); });
+      });
   },
 };
